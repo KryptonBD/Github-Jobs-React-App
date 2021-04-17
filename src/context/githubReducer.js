@@ -1,4 +1,4 @@
-import { GET_DATA, MAKE_REQUEST, ERROR } from './types';
+import { GET_DATA, MAKE_REQUEST, ERROR, SET_PAGE, NEXT_PAGE } from './types';
 
 //eslint-disable-next-line
 export default (state, action) => {
@@ -21,6 +21,16 @@ export default (state, action) => {
                 error: true,
                 loading: false,
                 jobs: []
+            }
+        case SET_PAGE:
+            return {
+                ...state,
+                page: action.payload
+            }
+        case NEXT_PAGE:
+            return {
+                ...state,
+                hasNextPage: action.payload
             }
         default:
             return {
