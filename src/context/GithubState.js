@@ -8,7 +8,7 @@ const GithubState = (props) => {
         jobs: [],
         loading: true,
         error: false,
-        params: null,
+        params: {},
         page: 1,
         hasNextPage: false
     }
@@ -29,7 +29,12 @@ const GithubState = (props) => {
     const getJobs = async (pg, params = {}) => {
         console.log("I was called");
         try {
-            const res = await fetch(`${BASE_URL}positions.json?page=${pg}&markdown=true`, { _SIGNAL });
+            let res;
+            if (params && params !== null) {
+                res = await fetch(`${BASE_URL}positions.json?page=${pg}&markdown=true&` + new URLSearchParams(params), { _SIGNAL });
+            } else {
+                res = await fetch(`${BASE_URL}positions.json?page=${pg}&markdown=true`, { _SIGNAL });
+            }
             const data = await res.json()
             dispatch({
                 type: GET_DATA,

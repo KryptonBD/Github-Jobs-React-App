@@ -4,6 +4,7 @@ import { useContext, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import Job from './Job';
 import JobsPagination from './JobsPagination';
+import SearchForms from './SearchForms';
 
 
 const Jobs = () => {
@@ -16,10 +17,19 @@ const Jobs = () => {
         //eslint-disable-next-line
     }, [page, params])
 
+    let ob = {};
+    const handleParamsChange = e => {
+        const param = e.target.name;
+        const value = e.target.value;
+        ob = { ...params, [param]: value }
+        getJobs(1, ob)
+    }
+
     return (
         <Container className="my-4">
             <h1 className="mb-4">Github Jobs</h1>
-            {!loading && !error && <JobsPagination page={page} changePage={changePage} hasNextPage={hasNextPage}/>}
+            <SearchForms onParamChange={handleParamsChange} />
+            {!loading && !error && <JobsPagination page={page} changePage={changePage} hasNextPage={hasNextPage} />}
             {loading && <h2>Loading ... </h2>}
             {!loading && error && <h2>Please Try Refreshing</h2>}
             {!loading && !error && jobs.length > 0 && jobs.map(job => <Job job={job} key={job.id} />)}
