@@ -14,7 +14,7 @@ const GithubState = (props) => {
     }
 
     const [state, dispatch] = useReducer(GithubReducer, initialState);
-    const BASE_URL = process.env.REACT_APP_GITHUB_JOBS_URL;
+    const BASE_URL = process.env.REACT_APP_GITHUB_JOBS_URL || "https://jobs.github.com/";
 
     const _CONTROLLER = new AbortController();
     const { signal: _SIGNAL } = _CONTROLLER;
